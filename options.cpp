@@ -6,25 +6,34 @@
 
 using namespace std;
 
-struct options {
-    int screenwidth;
-};
+Options::Options() {
+    options.screenwidth = SCREENWIDTH_DEFAULT;
+}
 
 int Options::show() {
-    options o;
+    // options to be set
     string text;
-    int sw;
+    int screenwidth;
+
+    // show the option values
     cout << "::: Options :::" << endl;
-    cout << "screen width (80): ";
+
+    // get the new value for screen width
+    cout << "screen width (" << options.screenwidth << "): ";
     cin >> text;
+    // Try to convert the user input to an integer or set it to 80 if
+    // the value is not correct
     try {
-        sw = stoi(text);
+        screenwidth = stoi(text);
     } catch(invalid_argument e) {
-        sw = 80;
+        screenwidth = SCREENWIDTH_DEFAULT;
     } catch(out_of_range e) {
-        sw = 80;
+        screenwidth = SCREENWIDTH_DEFAULT;
     }
-    cout << "set screenwidth to: " << sw << endl;
-    o.screenwidth = sw;
+    // give some feedback to the user
+    cout << "set screenwidth to: " << screenwidth << endl;
+    options.screenwidth = screenwidth;
+
+    // return to the menu after all values are set
     return menuState;
 }
