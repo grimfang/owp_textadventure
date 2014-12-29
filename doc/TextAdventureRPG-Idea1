@@ -1,0 +1,64 @@
+Text Adventure RPG
+
+:::Player Data:::
+
+Name				(the player name)
+Level				(current level of the player)
+initiative 			(to decide who will start in a fight)
+Attack-strength 	(how much damage we will make)
+Deffensive-strength (how much damage we can block)
+Lifepoints 			(how mach damage we can take)
+Gold 				(or whatever else we use as score)
+
+
+:::Startmenu:::
+
+1. Start Game
+2. Load Game
+3. Quit
+> |
+
+
+:::Move through story example::::
+
+Some text that describes the current point of the story, like what's
+to see in the current szene or what to hear. Every important note
+that the player could need to imagine the szene and deside what to do
+belongs here...
+
+[1. Do something] [2. Do something else] [3. Do nothing...]
+[q=quit] [s=startmenu]
+> |
+
+
+:::Fight:::
+
+Enemy blob appeared
+Name: Enemy | Atk: 7 | Def: 5 | LP: 40
+[1. Attack] [2. Flee]
+> 1
+You hit blob
+blob looses 8 LP
+blob: 30 LP left
+---
+Enemy blob attack
+you loose 5 LP
+Player: 60 LP left
+[1. Attack] [2. Flee]
+> |
+
+....
+
+You hit blob
+blob looses 5 LP
+blob is defeated
+
+you won! You earn 5 Gold from this battle and 1 exp.
+
+
+:::Levels:::
+
+You reached a new Level:
+
+[1. Attack+] [2. Deffensive+] [3. Lifepoints+] [4. Initiative+]
+> |
