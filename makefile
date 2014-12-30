@@ -5,7 +5,7 @@ objects = main.o menu.o options.o game.o
 game_name = game
 
 # using implicite rules, these flags will be used automatically
-CPPFLAGS = -std=c++0x
+CPPFLAGS = -std=c++0x -Wall -pedantic -Weffc++ -Werror
 game: $(objects)
 	g++ -o $(game_name) $(objects)
 

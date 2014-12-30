@@ -6,10 +6,6 @@
 
 using namespace std;
 
-Options::Options() {
-    options.screenwidth = SCREENWIDTH_DEFAULT;
-}
-
 int Options::show() {
     // options to be set
     string text;
