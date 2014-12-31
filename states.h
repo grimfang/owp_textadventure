@@ -10,4 +10,11 @@ enum states {
     unknownState,
 };
 
+enum story_states {
+    storyTravel = 0,
+    storyFight,
+    storyLevelUp,
+    storyExit,
+};
+
 #endif

@@ -1,0 +1,74 @@
+Name: Untamed
+
+Overview:
+You are an Animal who gets the chance to break out of an experimental laboratory.
+On the way you have to decide which ways to go, battle with humans and animals.
+You should also try to rescue other animals which will then flee with you together (get points)
+Solve puzzles and see how to get out of the laboratory.
+Finally if you get out of the lab you need to run away into the nearby forests and beginn a new life.
+
+Missions:
+Get out of the cage
+Find a way to open the doors
+Distract the guards
+Rescue other animals if possible
+
+
+Environments:
+Laboratory
+	Inside
+		Cell blocks
+		laboratorys
+		storage rooms
+		Main Hall
+	Outside
+		yard
+		backyard
+Outer world
+	Forest
+	Lake
+	Fields
+
+
+Map:
+C = Cell Block
+L = Laboratories
+S = Storage Room
+\\ = Stairs up
+// = Stairs down
+# = door/gate
+T = Tree
+| and _ walls and fences
+
+
+				^
+				|  Fields  ->
+             __________________________________________________________________________________________________________
+            |        |\\//|  START  |         |\\//|         |    |             |                                      |
+            |        |    |         |         |    |         |    |             |                                      |
+            |   C    #    #    C    |    S    #    #    S    |    #      M      |       T                   T          |
+            |        |    |         |         |    |         |    |      a      |                                      |
+            |        |    |         |         |    |         |    |      i      |                 T                    |
+            |________|    |_________|_________|    |_________|    |      n      |                                      |
+            |\\                     #                        #    |       -     |                                      |
+            |//______      _________#_________      _________#____|__      H    #                                      |
+            |   L    |    |    L    |         |    |         |       |     a    #                                      |
+            |________#    #_________|    L    #    #    L    | Front |     l    |             T        T        T      |
+            |        |    |         |_________|    |_________|   -   |     l    |                                      #
+            |   L    |    |    L    |    L    |    |    L    |  Desk #          |                   Yard               #
+            |________#    #_________|_________#    #_________|_______|          |                                      #
+            |         ####          |          ####                  |          |                                      #
+            |                       |                                |          |             T        T         T     |
+            |   Common Room         |          Cantina               |          |                                      |
+            |                       |                                |          |                                      |
+            |_______________________|________________________________|__________|                                      |
+<- Forest   |                                                                                                          |
+            #<-EXIT                       Backyard                                                     T               |
+            |                                                                                                          |
+            |         T          T          T              T                 T            T                      T     |
+            |                                                                                                          |
+            |__________________________________________________________________________________________________________|
+
+							| Lake
+							V
+
