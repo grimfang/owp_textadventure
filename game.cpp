@@ -2,11 +2,137 @@
 
 using namespace std;
 
+vector<string> split(string &s, char delim) {
+    vector<string> elems;
+    if(s[s.size()-1] == ':') {
+        s += " ";
+    }
+    stringstream ss(s, ios_base::in);
+    string item;
+    while (getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
 int Game::show() {
-    cout << "start game" << endl;
-    //TODO: setup the playerdata and ask the player for what he want to play as
-    //TODO: main loop for the game
-    //TODO: read in the story file and start writing it to the output stream
-    //TODO: handle user input
+    string character;
+    cout << "starting game..." << endl << "loading races..." << endl;
+
+    vector<string> race_names;
+    vector<Player*> playable_chars;
+    string line;
+    Player* current_char = new Player();
+    ifstream charfile ("characters.txt");
+    if (charfile.is_open()) {
+        while (getline (charfile, line)) {
+            if(line.empty()) {
+                playable_chars.push_back(current_char);
+                current_char = new Player();
+                continue;
+            }
+            vector<string> values = split(line, ':');
+            if(values[0] == "species") {
+                race_names.push_back(values[1]);
+                current_char->set_race(values[1]);
+            } else if(values[0] == "initiative") {
+                current_char->set_initiative(stoi(values[1]));
+            } else if(values[0] == "attack") {
+                current_char->set_attack(stoi(values[1]));
+            } else if(values[0] == "defense") {
+                current_char->set_defense(stoi(values[1]));
+            } else if(values[0] == "lifepoints") {
+                current_char->set_lifepoints(stoi(values[1]));
+            }
+        }
+        charfile.close();
+    } else {
+        cerr << "Unable to open character file";
+        return unknownState;
+    }
+
+    cout << endl << endl;
+    cout << "please select one of:" << endl;
+    for(unsigned int i = 0; i < race_names.size(); i++) {
+        cout << i << " " << race_names[i] << " | ";
+    }
+    cout << endl;
+    cout << "please enter the number of the character you want to choose:";
+    cin >> character;
+
+    int charID = stoi(character);
+    cout << "selection: " << charID << endl;
+
+    cout << endl << "loading story..." << endl;
+    cout << endl << endl << endl;
+    map<int, string> story;
+    map<int, vector<string>> decissions;
+    map<int, Player*> enemies;
+    ifstream storyfile ("story.txt");
+    if (storyfile.is_open()) {
+        int current_id = 0;
+        while (getline (storyfile, line)) {
+            if(line.empty()) {
+                continue;
+            }
+            vector<string> values = split(line, ':');
+            if(values[0] == "selection") {
+                vector<string> selections = split(values[1], '|');
+                decissions[current_id] = selections;
+            } else if(values[0] == "enemy") {
+                vector<string> enemy_values = split(values[1], '|');
+                Player* enemy = new Player;
+                enemy->set_name(enemy_values[0]);
+                enemy->set_initiative(stoi(enemy_values[1]));
+                enemy->set_attack(stoi(enemy_values[2]));
+                enemy->set_defense(stoi(enemy_values[3]));
+                enemy->set_lifepoints(stoi(enemy_values[4]));
+                enemies[current_id] = enemy;
+            } else {
+                current_id = stoi(values[0]);
+                cout << values[0];
+                cout << values[1] + "\n";
+                if(values[1].empty()) values[1] = " ";
+                story[current_id] += values[1] + "\n";
+            }
+        }
+        storyfile.close();
+    } else {
+        cerr << "Unable to open story file";
+        return unknownState;
+    }
+
+    bool end = false;
+    unsigned int current_story_point = 0;
+    do {
+        cout << story.at(current_story_point);
+        try {
+            Player* enemy = enemies.at(current_story_point);
+            cout << "enemy " << enemy->get_name() << " appeared" << endl;
+        } catch (out_of_range e) {
+            //nothing to do here
+            //cout << "this place is safe, no enemies here" << endl;
+        }
+        try {
+            bool add_newline = false;
+            //map<int, int, string> display_decissions;
+            for(unsigned int i = 0; i < decissions[current_story_point].size(); i++) {
+                /*vector<string> decs = split(decissions[current_story_point], '>');
+                display_decissions[i][decs[0]] = decs[1]*/
+                cout << i << ") " << decissions[current_story_point][i] << " | ";
+                add_newline = true;
+            }
+            if (add_newline) {
+                cout << endl;
+            }
+        } catch (out_of_range e) {
+            //nothing to do here
+        }
+
+        current_story_point += 1;
+        if(current_story_point >= story.size()) {
+            end = true;
+        }
+    } while(!end);
     return menuState;
 }

@@ -1,0 +1,23 @@
+0:*** * *** *   ***
+0: *  *  *  *   **
+0: *  *  *  *** ***
+0:Welcome to "untamed"
+0:
+0:
+
+1:Please make a decission
+1:Multiline decission text
+selection:a>2|b>3|c>4
+
+2:
+2:Text of a
+
+3:
+3:Text of b
+
+4:
+4:Text of c
+
+5:
+5:Next Text
+enemy:An Enemy|5|2|1|10
