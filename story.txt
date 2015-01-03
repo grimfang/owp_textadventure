@@ -7,7 +7,7 @@
 
 1:Please make a decission
 1:Multiline decission text
-selection:a>2|b>3|c>4
+selection:Some text A>2|Some other decission>3|Something else...>4
 
 2:
 2:Text of a
