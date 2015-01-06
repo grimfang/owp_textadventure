@@ -61,7 +61,13 @@ int Game::show() {
     cin >> character;
 
     int charID = stoi(character);
-    cout << "selection: " << charID << endl;
+    current_char = playable_chars[charID];
+
+    cout << "You'll play as: " << current_char->get_race() << endl;
+    cout << "please enter your name: ";
+    string charName;
+    cin >> charName;
+    current_char->set_name(charName);
 
     cout << endl << "loading story..." << endl;
     cout << endl << endl << endl;
@@ -107,9 +113,76 @@ int Game::show() {
         try {
             Player* enemy = enemies.at(current_story_point);
             cout << "enemy " << enemy->get_name() << " appeared" << endl;
+            bool fightDone = false;
+            bool playerTurn = false;
+            bool playerWin = false;
+            if (enemy->get_initiative() < current_char->get_initiative()) {
+                playerTurn = true;
+            }
+            string action;
+            int newPoints = 0;
+            int damage = 0;
+            while(!fightDone) {
+                if (playerTurn) {
+                    cout << "0) Attack    1) Flee" << endl;
+                    cout << "> ";
+                    cin >> action;
+                    cin.get();
+                    int selection = stoi(action);
+                    switch (selection) {
+                        case 0:
+                            newPoints = 0;
+                            damage = current_char->get_attack() - enemy->get_defense();
+                            if (damage <= 0) damage = 1;
+                            newPoints = enemy->get_lifepoints() - damage;
+                            enemy->set_lifepoints(newPoints);
+                            cout << "enemy lifepoints left: " << newPoints << endl;
+                            if (newPoints <= 0) {
+                                fightDone = true;
+                                playerWin = true;
+                            }
+                            break;
+                        case 1:
+                            srand (time(NULL));
+                            if (current_char->get_initiative() > enemy->get_initiative()) {
+                                fightDone = true;
+                                playerWin = true;
+                            } else if(rand() % 2 == 1) {
+                                fightDone = true;
+                                playerWin = true;
+                            }
+                            if (fightDone) {
+                                cout << "you can flee from the fight" << endl;
+                            } else {
+                                cout << "you can not flee from the fight" << endl;
+                            }
+                            break;
+                    }
+                    playerTurn = false;
+                } else {
+                    cout << enemy->get_name() << " attacks..." << endl;
+                    newPoints = 0;
+                    damage = enemy->get_attack() - current_char->get_defense();
+                    if (damage <= 0) damage = 1;
+                    newPoints = current_char->get_lifepoints() - damage;
+                    cout << "player lifepoints left: " << newPoints << endl;
+                    if (newPoints <= 0) {
+                        fightDone = true;
+                    }
+                    current_char->set_lifepoints(newPoints);
+                    playerTurn = true;
+                }
+            }
+            if (!playerWin) {
+                end = true;
+                break;
+            } else {
+                cout << "you've won the fight" << endl;
+                current_char->set_score(current_char->get_score() + 1);
+                cout << "your current score: " << current_char->get_score() << endl;
+            }
         } catch (out_of_range e) {
             //nothing to do here
-            //cout << "this place is safe, no enemies here" << endl;
         }
 
         bool has_decissions = false;
@@ -129,6 +202,7 @@ int Game::show() {
                 cout << endl;
                 cout << "> ";
                 cin >> user_input;
+                cin.get();
                 if (choice > number_decissions) choice = 0;
                 else if (choice < number_decissions) choice = 0;
                 choice = stoi(user_input);
@@ -140,11 +214,16 @@ int Game::show() {
 
         if (!has_decissions) {
             current_story_point += 1;
+            cout << "press enter to continue" << endl;
+            cin.get();
         }
 
         if(current_story_point >= story.size()) {
             end = true;
         }
     } while(!end);
+    cout << endl << endl << "Final score: " << current_char->get_score() \
+        << endl << endl << "Thanks for playing... " << current_char->get_name() \
+        << endl << endl;
     return menuState;
 }

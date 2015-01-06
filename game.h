@@ -7,6 +7,8 @@
 #include <vector>
 #include <sstream>
 #include <map>
+#include <cstdlib>
+#include <ctime>
 #include "states.h"
 #include "player.h"
 
