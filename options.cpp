@@ -7,6 +7,7 @@
 using namespace std;
 
 int Options::show() {
+    /// Display some options for the game (Currently unused)
     // options to be set
     string text;
     int screenwidth;

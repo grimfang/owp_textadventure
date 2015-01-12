@@ -10,6 +10,7 @@ enum states {
     unknownState,
 };
 
+// States for the story (Currently unused)
 enum story_states {
     storyTravel = 0,
     storyFight,

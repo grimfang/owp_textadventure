@@ -5,6 +5,7 @@
 using namespace std;
 
 int Menu::show() {
+    /// Display the main menu
     // Show the menu entries
     cout << "Welcome to the World of ..." << endl << endl\
         << "1) Start Game" << endl \
